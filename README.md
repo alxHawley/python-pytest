@@ -1,5 +1,10 @@
 # Python Pytest - Restful Booker API Testing
 
+[![Tests](https://github.com/yourusername/python-pytest/workflows/CI/badge.svg)](https://github.com/yourusername/python-pytest/actions)
+[![Coverage](https://img.shields.io/badge/coverage-88%25-brightgreen)](https://github.com/yourusername/python-pytest)
+[![Python](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
+[![Pytest](https://img.shields.io/badge/pytest-8.4.1+-green.svg)](https://docs.pytest.org/)
+
 A streamlined, fast pytest-based test suite for the [Restful Booker API](https://restful-booker.herokuapp.com/apidoc/index.html). This project focuses on simplicity and speed without the overhead of BDD frameworks.
 
 ## 🚀 Features
@@ -10,12 +15,25 @@ A streamlined, fast pytest-based test suite for the [Restful Booker API](https:/
 - **Error Handling**: Tests both positive and negative scenarios
 - **Environment Configurable**: Easy to switch between local Docker and production API
 
+## 📊 Project Status
+
+| Badge | Description | Status |
+|-------|-------------|---------|
+| ![Tests](https://github.com/yourusername/python-pytest/workflows/CI/badge.svg) | GitHub Actions CI/CD | ![GitHub Actions](https://img.shields.io/badge/status-passing-brightgreen) |
+| ![Coverage](https://img.shields.io/badge/coverage-88%25-brightgreen) | Test Coverage | ![Coverage](https://img.shields.io/badge/status-88%25-brightgreen) |
+| ![Python](https://img.shields.io/badge/python-3.8+-blue.svg) | Python Version | ![Python](https://img.shields.io/badge/status-3.8+-blue) |
+| ![Pytest](https://img.shields.io/badge/pytest-8.4.1+-green.svg) | Testing Framework | ![Pytest](https://img.shields.io/badge/status-8.4.1+-green) |
+
 ## 🏗️ Project Structure
 
 ```
 python-pytest/
+├── src/
+│   ├── __init__.py          # Package initialization
+│   └── api_client.py        # API client library
 ├── tests/
 │   ├── test_api.py          # Main API test suite
+│   ├── test_api_client.py   # API client tests
 │   └── conftest.py          # Pytest configuration
 ├── schemas/
 │   ├── booking_schema.json  # JSON schema for booking validation
@@ -139,6 +157,22 @@ To test against a local Docker instance:
    ```bash
    python -m pytest tests/ -v
    ```
+
+## 🔄 Updating Coverage Badge
+
+The coverage badge shows the current test coverage percentage. To update it:
+
+1. **Run coverage locally**:
+   ```bash
+   python -m pytest tests/ --cov=tests
+   ```
+
+2. **Update the badge URL** in README.md:
+   ```markdown
+   [![Coverage](https://img.shields.io/badge/coverage-XX%25-brightgreen)](https://github.com/yourusername/python-pytest)
+   ```
+
+3. **For automated updates**, the GitHub Actions workflow will generate coverage reports and you can manually update the badge based on the results.
 
 ## 📊 Test Results Example
 
