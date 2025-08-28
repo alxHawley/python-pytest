@@ -43,24 +43,28 @@ jobs:
         run: |
           python -m pytest tests/ --cov=tests --cov-report=xml --cov-report=html --cov-report=term-missing
 
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
-        with:
-          file: ./coverage.xml
-          flags: unittests
-          name: codecov-umbrella
-          fail_ci_if_error: false
-
       - name: Upload coverage artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: coverage-report
           path: htmlcov/
           retention-days: 30
 
-      - name: Comment PR with coverage
-        if: github.event_name == 'pull_request'
-        uses: romeovs/lcov-reporter-action@v0.3.0
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          lcov-file: ./coverage.xml
+      # Note: Codecov integration requires setting up codecov.io account
+      # Uncomment when ready to integrate with Codecov
+      # - name: Upload coverage to Codecov
+      #   uses: codecov/codecov-action@v3
+      #   with:
+      #     file: ./coverage.xml
+      #     flags: unittests
+      #     name: codecov-umbrella
+      #     fail_ci_if_error: false
+
+      # Note: PR coverage commenting requires additional setup
+      # Uncomment when ready for automated PR comments
+      # - name: Comment PR with coverage
+      #   if: github.event_name == 'pull_request'
+      #   uses: romeovs/lcov-reporter-action@v0.3.0
+      #   with:
+      #     github-token: ${{ secrets.GITHUB_TOKEN }}
+      #     lcov-file: ./coverage.xml
