@@ -1,19 +1,28 @@
-# Python Pytest - Restful Booker API Testing
+# Python Pytest - API & UI Testing Suite
 
 [![Tests](https://github.com/yourusername/python-pytest/workflows/CI/badge.svg)](https://github.com/yourusername/python-pytest/actions)
 [![Coverage](https://img.shields.io/badge/coverage-88%25-brightgreen)](https://github.com/yourusername/python-pytest)
 [![Python](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![Pytest](https://img.shields.io/badge/pytest-8.4.1+-green.svg)](https://docs.pytest.org/)
+[![Selenium](https://img.shields.io/badge/selenium-4.35.0+-orange.svg)](https://selenium-python.readthedocs.io/)
 
-A streamlined, fast pytest-based test suite for the [Restful Booker API](https://restful-booker.herokuapp.com/apidoc/index.html). This project focuses on simplicity and speed without the overhead of BDD frameworks.
+A comprehensive, fast pytest-based test suite covering both API testing for the [Restful Booker API](https://restful-booker.herokuapp.com/apidoc/index.html) and UI testing for the [Sauce Demo](https://www.saucedemo.com/) application. This project focuses on simplicity and speed without the overhead of BDD frameworks.
 
 ## 🚀 Features
 
+### API Testing
 - **Fast & Lightweight**: Pure pytest with no BDD overhead
 - **Comprehensive Coverage**: Tests all major API endpoints (CRUD operations)
 - **Schema Validation**: JSON schema validation using jsonschema
 - **Error Handling**: Tests both positive and negative scenarios
 - **Environment Configurable**: Easy to switch between local Docker and production API
+
+### UI Testing
+- **Modern Selenium**: Selenium 4.35+ with webdriver-manager for automatic driver management
+- **Test Isolation**: Function-scoped fixtures with proper browser cleanup
+- **Stable Selectors**: Data-test attributes for reliable element identification
+- **Cross-browser Ready**: Chrome with headless mode for CI/CD
+- **Performance Monitoring**: Built-in performance testing capabilities
 
 ## 📊 Project Status
 
@@ -34,6 +43,7 @@ python-pytest/
 ├── tests/
 │   ├── test_api.py          # Main API test suite
 │   ├── test_api_client.py   # API client tests
+│   ├── test_ui.py           # UI/Selenium test suite
 │   └── conftest.py          # Pytest configuration
 ├── schemas/
 │   ├── booking_schema.json  # JSON schema for booking validation
@@ -45,6 +55,7 @@ python-pytest/
 
 ## 🧪 Test Coverage
 
+### API Testing Coverage
 The test suite covers the following API endpoints:
 
 - **Health Check** (`/ping`) - API status verification
@@ -57,6 +68,16 @@ The test suite covers the following API endpoints:
 - **Delete Booking** (`DELETE /booking/{id}`) - Remove booking
 - **Authentication** (`POST /auth`) - Token generation and validation
 - **Error Scenarios** - Invalid IDs, authentication failures
+
+### UI Testing Coverage
+The UI test suite covers the following scenarios on [Sauce Demo](https://www.saucedemo.com/):
+
+- **Valid Login** - Successful authentication with standard credentials
+- **Invalid Login** - Error handling for incorrect credentials
+- **Locked User** - Handling of locked-out user accounts
+- **User Logout** - Complete logout flow and session cleanup
+- **Performance Testing** - Page load performance monitoring
+- **Inventory Display** - Product page functionality and element verification
 
 ## 🛠️ Setup & Installation
 
@@ -90,14 +111,21 @@ The test suite covers the following API endpoints:
 
 ## 🚀 Running Tests
 
-### Run all tests
+### Run all tests (API + UI)
 ```bash
 python -m pytest tests/ -v
 ```
 
-### Run specific test file
+### Run specific test suites
 ```bash
+# API tests only
 python -m pytest tests/test_api.py -v
+
+# UI tests only  
+python -m pytest tests/test_ui.py -v
+
+# API client tests only
+python -m pytest tests/test_api_client.py -v
 ```
 
 ### Run with coverage
@@ -179,27 +207,47 @@ The coverage badge shows the current test coverage percentage. To update it:
 ```
 ============================================ test session starts ============================================
 platform win32 -- Python 3.13.2, pytest-8.4.1, pluggy-1.6.0
-collected 10 items
+collected 22 items
 
-tests/test_api.py::TestAPI::test_health_check PASSED                    [ 10%]
-tests/test_api.py::TestAPI::test_create_booking PASSED                 [ 20%]
-tests/test_api.py::TestAPI::test_get_booking PASSED                    [ 30%]
-tests/test_api.py::TestAPI::test_get_all_bookings PASSED               [ 40%]
-tests/test_api.py::TestAPI::test_get_bookings_with_filters PASSED      [ 50%]
-tests/test_api.py::TestAPI::test_update_booking PASSED                 [ 60%]
-tests/test_api.py::TestAPI::test_partial_update_booking PASSED         [ 70%]
-tests/test_api.py::TestAPI::test_delete_booking PASSED                 [ 80%]
-tests/test_api.py::TestAPI::test_invalid_booking_id PASSED             [ 90%]
-tests/test_api.py::TestAPI::test_invalid_auth_credentials PASSED       [100%]
+tests/test_api.py::TestAPI::test_health_check PASSED                   [  4%]
+tests/test_api.py::TestAPI::test_create_booking PASSED                 [  9%]
+tests/test_api.py::TestAPI::test_get_booking PASSED                    [ 13%]
+tests/test_api.py::TestAPI::test_get_all_bookings PASSED               [ 18%]
+tests/test_api.py::TestAPI::test_get_bookings_with_filters PASSED      [ 22%]
+tests/test_api.py::TestAPI::test_update_booking PASSED                 [ 27%]
+tests/test_api.py::TestAPI::test_partial_update_booking PASSED         [ 31%]
+tests/test_api.py::TestAPI::test_delete_booking PASSED                 [ 36%]
+tests/test_api.py::TestAPI::test_invalid_booking_id PASSED             [ 40%]
+tests/test_api.py::TestAPI::test_invalid_auth_credentials PASSED       [ 45%]
+tests/test_api_client.py::TestAPIClient::test_api_client_initialization PASSED [ 50%]
+tests/test_api_client.py::TestAPIClient::test_api_client_default_url PASSED [ 54%]
+tests/test_api_client.py::TestAPIClient::test_get_health PASSED        [ 59%]
+tests/test_api_client.py::TestAPIClient::test_get_bookings PASSED      [ 63%]
+tests/test_api_client.py::TestAPIClient::test_create_booking PASSED    [ 68%]
+tests/test_api_client.py::TestAPIClient::test_get_booking_success PASSED [ 72%]
+tests/test_ui.py::TestLogin::test_valid_login PASSED                   [ 77%]
+tests/test_ui.py::TestLogin::test_invalid_login PASSED                 [ 81%]
+tests/test_ui.py::TestLogin::test_locked_out_user PASSED               [ 86%]
+tests/test_ui.py::TestLogin::test_logout PASSED                        [ 90%]
+tests/test_ui.py::TestLogin::test_page_load_performance XFAIL           [ 95%]
+tests/test_ui.py::TestInventory::test_inventory_items_displayed PASSED [100%]
 
-============================================= 10 passed in 10.51s =============================================
+============================================ 21 passed, 1 xfailed in 57.95s ============================================
 ```
 
 ## 🔧 Dependencies
 
+### Core Testing
 - **pytest**: Testing framework
+- **pytest-cov**: Coverage reporting
+
+### API Testing
 - **requests**: HTTP library for API calls
 - **jsonschema**: JSON schema validation
+
+### UI Testing
+- **selenium**: Web browser automation
+- **webdriver-manager**: Automatic browser driver management
 
 ## 📝 Code Quality
 
